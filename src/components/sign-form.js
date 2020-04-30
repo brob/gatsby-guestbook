@@ -30,20 +30,24 @@ export default class SignForm extends React.Component {
         this.props.setSigData(oldState => [...oldState, signatureInfo]);
     }
     createSignature = async (sigName, sigMessage) => {
-        const queryResponse = await client.query(
-            q.Create(
-                q.Collection('signatures'),
-                { 
-                    data: { 
-                        name: sigName,
-                        message: sigMessage
-                    } 
-                }
+        try {
+            const queryResponse = await client.query(
+                q.Create(
+                    q.Collection('signatures'),
+                    { 
+                        data: { 
+                            name: sigName,
+                            message: sigMessage
+                        } 
+                    }
+                )
             )
-        )
-        const signatureInfo = { name: queryResponse.data.name, message: queryResponse.data.message, _ts: queryResponse.ts, _id: queryResponse.id}
+            const signatureInfo = { name: queryResponse.data.name, message: queryResponse.data.message, _ts: queryResponse.ts, _id: queryResponse.id}
 
-        return signatureInfo
+            return signatureInfo
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     render() {
