@@ -1,72 +1,21 @@
-# Gatsby Bulma Quickstart
+# Gatsby Guestbook
 
-> A Quick Way to bootstrap your next Gatsby + Bulma site.
+This is a guestbook app built using FaunaDB and Gatsby. It utilizes a basic Bulma starter kit
 
-![ss](https://i.imgur.com/Vz81GEl.png)
+This is the first demo in an upcoming Smashing Magazine article
 
-## Demo 💯
+## Requirements
 
-- [Demo Link](https://tender-raman-99e09b.netlify.com/)
+* FaunaDB
+* Node/NPM
 
-## Features 🚀
+## Installation
 
-- Gatsby v2
-- Bulma CSS
-- Responsive design
-- Google Analytics
-- SEO
-- Netlify Deployment
-
-## Languages and Frameworks ⚛️
-
-- Gatsby
-- Bulma
-- SASS
-- GraphQL
-
-## How to use it? 👨‍💻
-
-You need npm and Gatsby CLI installed on your development machine.
-
-### 1. Clone the repository/Installation
-
-If you have Git installed on your system you can run the following command:
-
-`git clone https://github.com/amandeepmittal/gatsby-bulma-quickstart.git`
-
-Otherwise you can directly download it clicking on download button on this repository.
-
-### 2. Running in development mode
-
-Go inside `gatsby-bulma-quickstart/` directory and run the following command:
-
-`npm run develop`
-
-### 3. Open the source code and start editing!
-
-The site is now running at
-[http://localhost:8000](http://localhost:8000).
-
-Open `gatsby-bulma-quickstart/` directory in your code editor of choice and edit it. Save your changes and the browser will update them in real time!
-
-### 4. Add your own Google Analytics Id
-
-Once you have google-analytics tracking id for your site, you can configure in `gatsby-config.js` file:
-
-```js
-resolve: `gatsby-plugin-google-analytics`,
-  options: {
-    // Your Tracking Id 👇
-    trackingId: 'UA-XXXXXXXX-X',
-    anonymize: true
-    }
-  }
-```
-
-## Contact me
-
-If you find any possible improvement or suggestion related to code or UI/UX please contribute by submitting a PR.
-
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A611K61)
-
-**Happy Coding!** 🎉🎉
+* `npm install`
+* Create `.env` file with YOUR_FAUNADB_SECRET, GATSBY_FAUNA_CLIENT_SECRET and GATSBY_BUILD_HOOK.
+  * YOUR_FAUNADB_SECRET should be set to your Server Key, 
+  * Client secret should be set to a key with very limited permissions
+  * Build hook should be set to your Netlify (or other) build hook URL
+* Set Fauna Server key in `gatsby-config.js` plugin
+* Create a Fauna Collection called "signatures" and an Index called "allSignatures"
+* Run `gatsby develop`

@@ -1,21 +1,28 @@
 
 import React from 'react';
-import './style.scss';
+
 import faunadb, { query as q } from "faunadb"
 
-var client = new faunadb.Client({ secret: "fnADpmjHzNACE3RBAwyf6KTohjcyYGI9yJ9wxgME" })
+var client = new faunadb.Client({ secret: process.env.GATSBY_FAUNA_CLIENT_SECRET })
 
 export default class SignForm extends React.Component {
-    state = {
-      sigName: "",
-      sigMessage: ""
+    constructor(props) {
+        super(props);
+        this.state = {
+            sigName: "",
+            sigMessage: ""
+        }
+    }
+
+    triggerBuild = async () => {
+        const response = await fetch(process.env.GATSBY_BUILD_HOOK, { method: "POST", body: "{}" });
+        return response;
     }
 
     handleSubmit = async event => {
         event.preventDefault();
         const placeSig = await this.createSignature(this.state.sigName, this.state.sigMessage);
-        console.log(placeSig);
-        this.addSignature(placeSig);
+        this.props.setSigData(oldState => [...oldState, placeSig]);
     }
 
     handleInputChange = event => {
@@ -25,9 +32,6 @@ export default class SignForm extends React.Component {
         this.setState({
             [name]: value,
         })
-    }
-    addSignature(signatureInfo) {
-        this.props.setSigData(oldState => [...oldState, signatureInfo]);
     }
     createSignature = async (sigName, sigMessage) => {
         try {
@@ -42,8 +46,14 @@ export default class SignForm extends React.Component {
                     }
                 )
             )
-            const signatureInfo = { name: queryResponse.data.name, message: queryResponse.data.message, _ts: queryResponse.ts, _id: queryResponse.id}
-
+            const signatureInfo = { 
+                name: queryResponse.data.name, 
+                message: queryResponse.data.message, 
+                _ts: queryResponse.ts, 
+                _id: queryResponse.id
+            }
+            const buildResponse = this.triggerBuild();
+            console.log(await buildResponse)
             return signatureInfo
         } catch(err) {
             console.log(err);
